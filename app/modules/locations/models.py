@@ -6,6 +6,7 @@ import uuid
 from app.modules.organizations.models import OrgMember, Organization
 from app.modules.users.models import User
 from app.database import Base
+from app.core.enums import location_level_enum
 
 class Location(Base):
     __tablename__ = "locations"
@@ -14,7 +15,7 @@ class Location(Base):
     org_id     = Column(UUID(as_uuid=True), ForeignKey("organizations.id"), nullable=False)
     parent_id  = Column(UUID(as_uuid=True), ForeignKey("locations.id"), nullable=True)
     name       = Column(String(255), nullable=False)
-    level      = Column(Enum("warehouse", "room", "rack", "shelf", "slot", name="location_level"), nullable=False)
+    level      = Column(location_level_enum, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
 
     organization = relationship("Organization", back_populates="locations")

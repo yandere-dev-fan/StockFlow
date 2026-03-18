@@ -11,7 +11,7 @@ from app.modules.users.models import User
 from app.modules.locations.models import Location
 from app.modules.items.models import Item, ItemType, ItemUnit
 from app.modules.alerts.models import Alert, AlertRule
-
+from app.modules.sales.models import Sale
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config

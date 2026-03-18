@@ -3,8 +3,8 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import uuid
-from app.modules.users.models import User
 from app.database import Base
+from app.core.enums import alert_status_enum
 
 class AlertRule(Base):
     __tablename__ = "alert_rules"
@@ -25,7 +25,7 @@ class Alert(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     item_id = Column(UUID(as_uuid=True), ForeignKey("items.id"), nullable=False)
     alert_rule_id = Column(UUID(as_uuid=True), ForeignKey("alert_rules.id"))
-    status = Column(Enum("pending", "read", "dismissed"), nullable=False, default="pending")
+    status = Column(alert_status_enum, nullable=False, default="pending")
     created_at = Column(DateTime, server_default=func.now())
 
     item = relationship("Item", back_populates="alerts")

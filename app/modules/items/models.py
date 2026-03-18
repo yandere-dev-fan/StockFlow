@@ -10,6 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from app.modules.organizations.models import OrgMember, Organization
 from app.modules.users.models import User
 from app.database import Base
+from app.core.enums import item_status_enum
 
 class Item(Base):
     __tablename__ = "items"
@@ -27,14 +28,7 @@ class Item(Base):
     stock_qty = Column(Integer, default=1, nullable=False)
     markdown_eligible = Column(Boolean, default=False)
     status = Column(
-        Enum(
-            "listed", "unlisted", "sold",
-            "being_delivered_to_warehouse",
-            "delivered_to_warehouse",
-            "being_delivered_to_client",
-            "delivered_to_client",
-            name="item_status"
-        ),
+        item_status_enum,
         default="unlisted",
         nullable=False
     )
@@ -43,6 +37,7 @@ class Item(Base):
     location = relationship("Location", back_populates="items")
     units = relationship("ItemUnit", back_populates="item")
     alerts = relationship("Alert", back_populates="item")
+    sales = relationship("Sale", back_populates="item")
 
 class ItemType(Base):
     __tablename__ = "item_types"
@@ -64,14 +59,7 @@ class ItemUnit(Base):
     item_id    = Column(UUID(as_uuid=True), ForeignKey("items.id"), nullable=False)
     attributes = Column(JSONB, nullable=False, default=dict)
     status     = Column(
-        Enum(
-            "listed", "unlisted", "sold",
-            "being_delivered_to_warehouse",
-            "delivered_to_warehouse",
-            "being_delivered_to_client",
-            "delivered_to_client",
-            name="item_status"
-        ),
+        item_status_enum,
         default="unlisted",
         nullable=False
     )

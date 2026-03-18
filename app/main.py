@@ -5,6 +5,7 @@ from app.modules.organizations.models import Organization, OrgMember
 from app.modules.items.models import Item, ItemType, ItemUnit
 from app.modules.alerts.models import Alert, AlertRule
 from app.modules.locations.models import Location
+from app.modules.sales.models import Sale
 
 app = FastAPI(title="StockFlow", version="1.0")
 
