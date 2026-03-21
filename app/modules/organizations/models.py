@@ -36,4 +36,4 @@ class OrgMember(Base):
 
     organization = relationship("Organization", back_populates="members")
     user         = relationship("User", back_populates="memberships")
-    locations = relationship("Location", back_populates="organization")
+
